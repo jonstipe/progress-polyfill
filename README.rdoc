@@ -1,0 +1,15 @@
+= Progress polyfill
+
+This is a polyfill for implementing the HTML5 +<progress>+ element in browsers that do not currently support it.
+
+== Usage
+
+Using it is easy — simply include the +progress-polyfill.js+ file in the HEAD of the HTML page. You can then use +<progress>+ elements normally.
+
+The script will look through each +<progress>+ element on the page and construct its own graphical meter using two +<div>+ elements. This is then added as a child of the +<progress>+ element, to serve as a fallback. Browsers that support +<progress>+ elements will still show them natively, while browsers that don't support them will instead show our +<div>+ meters.
+
+A default css file is provided. You may edit this file to style the meters to make them look the way you want.
+
+== Dependencies
+
+This script requires only the jQuery[http://jquery.com/] library.

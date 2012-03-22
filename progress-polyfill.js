@@ -1,7 +1,7 @@
 $(function(){
   document.createElement('progress');
   var updatePolyfill = function(progressElem, progressBarDiv) {
-    var params = $([($(this).attr('max') || '1.0'), $(this).attr('value')]).map(function() {
+    var params = $([($(progressElem).attr('max') || '1.0'), $(progressElem).attr('value')]).map(function() {
       if (/^\-?\d+(?:\.\d+)?$/.test(this)) {
 	return parseFloat(this);
       }

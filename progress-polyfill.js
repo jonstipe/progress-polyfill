@@ -1,3 +1,5 @@
+// HTML5 Progress polyfill
+// Author: Jonathan Stipe (https://github.com/jonstipe/progress-polyfill)
 (function ($) {
 	document.createElement('progress');
 	var updatePolyfill = function (progressElem, progressBarDiv) {

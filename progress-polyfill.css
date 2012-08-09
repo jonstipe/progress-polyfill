@@ -1,3 +1,5 @@
+/* HTML5 Progress polyfill 
+Author: Jonathan Stipe (https://github.com/jonstipe/progress-polyfill) */
 progress div.progress-frame {
   height: 1em;
   width: 100%;

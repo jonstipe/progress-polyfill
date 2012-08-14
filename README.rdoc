@@ -13,3 +13,7 @@ A default css file is provided. You may edit this file to style the meters to ma
 == Dependencies
 
 This script requires only the jQuery[http://jquery.com/] library.
+
+==Demo
+
+Demo[http://jonstipe.github.com/progress-polyfill/index-eng.html]

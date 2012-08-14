@@ -6,7 +6,10 @@
     <title>Progress polyfill</title>
     <link rel="stylesheet" type="text/css" href="progress-polyfill.css" />
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-    <script type="text/javascript" src="progress-polyfill.js"></script>
+    
+	<!--[if lt IE 9]>
+	<script src="html5shiv.js"></script>
+	<![endif]-->
   </head>
   <body>
 <table style="width: 100%">
@@ -27,5 +30,6 @@
 <td><progress></progress></td>
 </tr>
 </table>
+<script type="text/javascript" src="progress-polyfill.js"></script>
 </body>
 </html>

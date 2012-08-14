@@ -1,33 +1,42 @@
-$(function(){
-  document.createElement('progress');
-  var updatePolyfill = function(progressElem, progressBarDiv) {
-    var params = $([($(progressElem).attr('max') || '1.0'), $(progressElem).attr('value')]).map(function() {
-      if (/^\-?\d+(?:\.\d+)?$/.test(this)) {
-	return parseFloat(this);
-      }
-    }).get();
-    var max = params[0];
-    var val = params[1];
-    if (val > max) val = max;
-    var amt = (val / max) * 100.0;
-    progressBarDiv.style.width = amt + "%";
-  };
-  $('progress[value]').each(function(index) {
-    var progressFrameDiv = document.createElement('div');
-    var progressBarDiv = document.createElement('div');
-    progressFrameDiv.appendChild(progressBarDiv);
-    $(progressFrameDiv).addClass('progress-frame');
-    $(progressBarDiv).addClass('progress-bar');
-    updatePolyfill(this, progressBarDiv);
-    this.appendChild(progressFrameDiv);
-    $(this).bind("DOMAttrModified", function(event) {
-      updatePolyfill(this, progressBarDiv);
-    });
-  });
+/*! HTML5 Progress polyfill | Jonathan Stipe | https://github.com/jonstipe/progress-polyfill*/
+(function ($) {
+	$.fn.progress = function () {
+		return $(this).each(function () {
+			var $this = $(this),
+				progress = $this.children('.progress-frame, .progress-undefined'),
+				params,
+				amt,
+				attr = {'role': 'progressbar'};
 
-  $('progress:not([value])').each(function(index) {
-    var progressDiv = document.createElement('div');
-    $(progressDiv).addClass('progress-undefined');
-    this.appendChild(progressDiv);
-  });
-});
+			$this.off('DOMAttrModified propertychange');
+			if ($this.is('[value]')) {
+				if (progress.length < 1) {
+					progress = $('<div class="progress-frame"><div class="progress-bar"/></div>');
+					$this.append(progress);
+				}
+				params = $([$this.attr('max') || '1.0', $this.attr('value')]).map(function () {
+					try {
+						return parseFloat(this);
+					} catch (e) { return null; }
+				});
+				attr['aria-valuemin'] = 0;
+				attr['aria-valuemax'] = params[0];
+				attr['aria-valuenow'] = params[1];
+
+				if (attr['aria-valuenow'] > attr['aria-valuemax']) {attr['aria-valuenow'] = attr['aria-valuemax']; }
+				amt = (attr['aria-valuenow'] / attr['aria-valuemax']) * 100.0;
+				progress.children('.progress-bar').css('width', amt + '%');
+
+			} else if ($this.not('[value]') && progress.length < 1) {
+				progress = $('<div class="progress-undefined"/>');
+				$this.append(progress);
+			}
+
+			$this.attr(attr);
+			$this.on('DOMAttrModified propertychange', function () {
+				$this.progress();
+			});
+		});
+	};
+	$('progress').progress();
+}(jQuery));

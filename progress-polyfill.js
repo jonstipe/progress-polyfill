@@ -7,7 +7,7 @@
 				params,
 				amt,
 				attr = {'role': 'progressbar'};
-			
+
 			$this.off('DOMAttrModified propertychange');
 			if ($this.is('[value]')) {
 				if (progress.length < 1) {
@@ -31,7 +31,7 @@
 				progress = $('<div class="progress-undefined"/>');
 				$this.append(progress);
 			}
-			
+
 			$this.attr(attr);
 			$this.on('DOMAttrModified propertychange', function () {
 				$this.progress();

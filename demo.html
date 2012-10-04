@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+    <title>Progress polyfill</title>
+    <meta name="author" content="Jonathan Stipe" />
+    <meta name="copyright" content="&copy; 2012 Jonathan Stipe" />
+    <link rel="stylesheet" type="text/css" href="progress-polyfill.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="progress-polyfill.js"></script>
+    <script type="text/javascript">
+//<![CDATA[
+$(function(){
+  var trElem = document.createElement("tr"),
+      tdElem1 = document.createElement("td"),
+      tdElem2 = document.createElement("td"),
+      progressElem = document.createElement("progress");
+  progressElem.setAttribute("name", "progressGenerated");
+  progressElem.setAttribute("value", "0.70");
+  tdElem1.appendChild(document.createTextNode("Dynamically generated element:"));
+  tdElem2.appendChild(progressElem);
+  trElem.appendChild(tdElem1);
+  trElem.appendChild(tdElem2);
+  $("table").append(trElem);
+  $(progressElem).html5Progress();
+  
+  var intervalID = window.setInterval(function(){
+    var $progressElem = $("progress[name='some_progress_changeable']");
+    var val = parseInt($progressElem.attr("value"), 10)
+    if (val >= 100) {
+      $progressElem.attr("value", 0);
+    } else {
+      $progressElem.attr("value", val + 1);
+    }
+  }, 200);
+  
+  $("#switch_progress_btn").click(function(event){
+    var $progressElem = $("progress[name='some_progress_switchable']");
+    if ($progressElem.is("[value]")) {
+      $progressElem.removeAttr("value");
+    } else {
+      $progressElem.attr("value", "40");
+    }
+    event.preventDefault();
+  });
+});
+//]]>
+    </script>
+</head>
+<body>
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 10%">Normal</td>
+      <td style="width: 90%"><progress max="100" value="50"></progress></td>
+    </tr>
+    <tr>
+      <td>No max</td>
+      <td><progress value="0.60"></progress></td>
+    </tr>
+    <tr>
+      <td>No value</td>
+      <td><progress max="100"></progress></td>
+    </tr>
+    <tr>
+      <td>No max or value</td>
+      <td><progress></progress></td>
+    </tr>
+    <tr>
+      <td>Changeable</td>
+      <td><progress name="some_progress_changeable" value="1" max="100"></progress></td>
+    </tr>
+    <tr>
+      <td>Switch between defined and undefined</td>
+      <td><progress name="some_progress_switchable" value="40" max="100"></progress><br />
+        <button id="switch_progress_btn">Change</button></td>
+    </tr>
+  </table>
+</body>
+</html>

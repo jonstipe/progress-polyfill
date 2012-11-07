@@ -16,7 +16,7 @@ The script can also be called manually as a jQuery plugin for elements dynamical
 
 ## Dependencies
 
-This script requires only the jQuery[http://jquery.com/] library.
+This script requires only the [jQuery](http://jquery.com/) library.
 
 ## Demo
 
